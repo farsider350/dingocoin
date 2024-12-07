@@ -101,11 +101,13 @@ CAuxPow::check(const uint256& hashAuxBlock, int nChainId,
           != parentBlock.hashMerkleRoot)
         return error("Aux POW merkle root incorrect");
 
+    // Check there's at least one input
+    if (tx->vin.empty())
+        return error("AUXPOW coinbase does not have any inputs");
+
     const CScript script = tx->vin[0].scriptSig;
 
     // Check that the same work is not submitted twice to our chain.
-    //
-
     CScript::const_iterator pcHead =
         std::search(script.begin(), script.end(), UBEGIN(pchMergedMiningHeader), UEND(pchMergedMiningHeader));
 
