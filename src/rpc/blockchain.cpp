@@ -1166,17 +1166,17 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     LOCK(cs_main);
 
     UniValue obj(UniValue::VOBJ);
-    obj.push_back(Pair("chain",                 Params().NetworkIDString()));
-    obj.push_back(Pair("blocks",                (int)chainActive.Height()));
-    obj.push_back(Pair("headers",               pindexBestHeader ? pindexBestHeader->nHeight : -1));
-    obj.push_back(Pair("bestblockhash",         chainActive.Tip()->GetBlockHash().GetHex()));
-    obj.push_back(Pair("difficulty",            (double)GetDifficulty()));
-    obj.push_back(Pair("mediantime",            (int64_t)chainActive.Tip()->GetMedianTimePast()));
-    obj.push_back(Pair("verificationprogress",  GuessVerificationProgress(Params().TxData(), chainActive.Tip())));
-    obj.push_back(Pair("initialblockdownload",  IsInitialBlockDownload()));
-    obj.push_back(Pair("chainwork",             chainActive.Tip()->nChainWork.GetHex()));
-    obj.push_back(Pair("size_on_disk",          CalculateCurrentUsage()));
-    obj.push_back(Pair("pruned",                fPruneMode));
+    obj.pushKV("chain",                 Params().NetworkIDString()));
+    obj.pushKV("blocks",                (int)chainActive.Height()));
+    obj.pushKV("headers",               pindexBestHeader ? pindexBestHeader->nHeight : -1));
+    obj.pushKV("bestblockhash",         chainActive.Tip()->GetBlockHash().GetHex()));
+    obj.pushKV("difficulty",            (double)GetDifficulty()));
+    obj.pushKV("mediantime",            (int64_t)chainActive.Tip()->GetMedianTimePast()));
+    obj.pushKV("verificationprogress",  GuessVerificationProgress(Params().TxData(), chainActive.Tip())));
+    obj.pushKV("initialblockdownload",  IsInitialBlockDownload()));
+    obj.pushKV("chainwork",             chainActive.Tip()->nChainWork.GetHex()));
+    obj.pushKV("size_on_disk",          CalculateCurrentUsage()));
+    obj.pushKV("pruned",                fPruneMode));
     if (fPruneMode) {
         CBlockIndex* block = chainActive.Tip();
         assert(block);
@@ -1184,13 +1184,13 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
             block = block->pprev;
         }
 
-        obj.push_back(Pair("pruneheight",        block->nHeight));
+        obj.pushKV("pruneheight",        block->nHeight));
 
         // if 0, execution bypasses the whole if block.
         bool automatic_pruning = (GetArg("-prune", 0) != 1);
-        obj.push_back(Pair("automatic_pruning",  automatic_pruning));
+        obj.pushKV("automatic_pruning",  automatic_pruning));
         if (automatic_pruning) {
-            obj.push_back(Pair("prune_target_size",  nPruneTarget));
+            obj.pushKV("prune_target_size",  nPruneTarget));
         }
     }
 
@@ -1203,9 +1203,9 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     softforks.push_back(SoftForkDesc("bip65", 4, tip, consensusParams));
     BIP9SoftForkDescPushBack(bip9_softforks, "csv", consensusParams, Consensus::DEPLOYMENT_CSV);
     BIP9SoftForkDescPushBack(bip9_softforks, "segwit", consensusParams, Consensus::DEPLOYMENT_SEGWIT);
-    obj.push_back(Pair("softforks",             softforks));
-    obj.push_back(Pair("bip9_softforks", bip9_softforks));
-    obj.push_back(Pair("warnings", GetWarnings("statusbar")));
+    obj.pushKV("softforks",             softforks));
+    obj.pushKV("bip9_softforks", bip9_softforks));
+    obj.pushKV("warnings", GetWarnings("statusbar")));
     return obj;
 }
 
@@ -1293,11 +1293,11 @@ UniValue getchaintips(const JSONRPCRequest& request)
     BOOST_FOREACH(const CBlockIndex* block, setTips)
     {
         UniValue obj(UniValue::VOBJ);
-        obj.push_back(Pair("height", block->nHeight));
-        obj.push_back(Pair("hash", block->phashBlock->GetHex()));
+        obj.pushKV("height", block->nHeight));
+        obj.pushKV("hash", block->phashBlock->GetHex()));
 
         const int branchLen = block->nHeight - chainActive.FindFork(block)->nHeight;
-        obj.push_back(Pair("branchlen", branchLen));
+        obj.pushKV("branchlen", branchLen));
 
         string status;
         if (chainActive.Contains(block)) {
@@ -1319,7 +1319,7 @@ UniValue getchaintips(const JSONRPCRequest& request)
             // No clue.
             status = "unknown";
         }
-        obj.push_back(Pair("status", status));
+        obj.pushKV("status", status));
 
         res.push_back(obj);
     }
