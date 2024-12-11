@@ -2909,8 +2909,6 @@ bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, bool f
         if (!block.IsAuxpow())
             return error("%s : auxpow on block with non-auxpow version", __func__);
 
-
-        // Can't do these since current aux chain id is not known.
         if (!CheckProofOfWork(block.auxpow->getParentBlockPoWHash(), block.nBits, params))
             return error("%s : AUX proof of work failed", __func__);
         if (!block.auxpow->check(block.GetHash(), block.GetChainId(), params))
