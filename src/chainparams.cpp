@@ -118,10 +118,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 0; // Disabled
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000144662338111b2add0");
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000007ce445af8c2e38bb03");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x9d53b93b7e1158f3c4b04a45d9bd08ae1c56fe6787786da6ffc20ed7768f10aa"); // 1,420,369
+        consensus.defaultAssumeValid = uint256S("0xf3fc2b6e7b65c7890c1bbf34dc9f50134ce7bb02920283948ab60c038aafbedb"); // 1,874,514
 
         // AuxPoW parameters
         consensus.nAuxpowChainIds = {0x0062, 0x0032}; // All future chain IDs. Used for permissive block header checks.
@@ -171,6 +171,10 @@ public:
         // Note that of those with the service bits flag, most only support a subset of possible options
         vSeeds.push_back(CDNSSeedData("vps.dingocoin.com", "dnsseed.dingocoin.com", true));
         vSeeds.push_back(CDNSSeedData("australiacash.org", "seed.australiacash.org", true));
+        vSeeds.push_back(CDNSSeedData("seed1.dingocoin.com", "seed1.dingocoin.com", true));
+        vSeeds.push_back(CDNSSeedData("seed2.dingocoin.com", "seed2.dingocoin.com", true));
+        vSeeds.push_back(CDNSSeedData("seed3.dingocoin.com", "seed3.dingocoin.com", true));
+
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,30);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,22);
@@ -326,7 +330,7 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.push_back(CDNSSeedData("testnet", "134.122.22.42"));
+        vSeeds.push_back(CDNSSeedData("tn-seed.dingocoin.com", "tn-seed.dingocoin.com", true));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,113); // 0x71
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196); // 0xc4
